@@ -1,0 +1,5 @@
+# Packages required to be installed before running the application
+flask
+flask_restful
+flask_sqlalchemy
+sqlite3

@@ -4,15 +4,25 @@ from flask_restful import Resource, Api, abort
 
 api = Api(app)
 
-def abort_if_res_non_existant(res_id):
-    if res_id > len(FAKE_DATA):
-        abort(404,
-              message=('Resource with id: %s does not exist' % res_id))
-
 
 class PinCodes(Resource):
     def get(self):
-        return [{"pincode": x.pincode, "officename": x.officename} for x in postalinfo.query.filter().all()]
+        vals = postalinfo.query.filter().all()
+        yo = []
+        some = {}
+        for val in vals:
+            some["Postal Index Number"] = val.pincode
+            some["Office Name"] = val.officename
+            some["Office Type"] = val.officeType
+            some["Delivery Status"] = val.Deliverystatus
+            some["Division Name"] = val.divisionname
+            some["Region Name"] = val.regionname
+            some["Circle Name"] = val.circlename
+            some["Taluk"] = val.Taluk
+            some["District Name"] = val.Districtname
+            some["State Name"] = val.statename
+            yo.append(some)
+        return yo
 
     def post(self):
         pass
@@ -20,8 +30,7 @@ class PinCodes(Resource):
 
 class PinCode(Resource):
     def get(self, res_id):
-#         abort_if_res_non_existant(int(res_id))
-        val = postalinfo.query.filter().get(res_id)
+        val = postalinfo.query.filter().get_or_404(res_id)
         return {"Postal Index Number": res_id,
                 "Office Name": val.officename,
                 "Office Type": val.officeType,

@@ -1,10 +1,5 @@
 import csv, sqlite3
 
-csv_file = "./all_india_pin_code.csv"
-table_name = "PostalInfo"
-db_name = "./inventory.db"
-
-
 def _get_col_datatypes(fin):
     dr = csv.DictReader(fin) # comma is default delimiter
     fieldTypes = {}
@@ -57,7 +52,6 @@ def csvToDb(csvFile, outputToFile = False):
 
         # Generate create table statement:
         stmt = "CREATE TABLE %s (%s)" % (table_name, ",".join(cols))
-        # TODO add pincode as primary key
 
         cur.execute(stmt)
 
@@ -73,4 +67,8 @@ def csvToDb(csvFile, outputToFile = False):
 
     return con
 
-csvToDb(csv_file)
+if __name__ == "__main__":
+    csv_file = "./all_india_pin_code.csv"
+    table_name = "PostalInfo"
+    db_name = "./inventory.db"
+    csvToDb(csv_file)
