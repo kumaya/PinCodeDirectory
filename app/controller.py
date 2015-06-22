@@ -11,8 +11,12 @@ class PinCodes(Resource):
         query = postalinfo.query
         page = request.args.get('page', 1)
         per_page = request.args.get('size', 50)
-        vals = query.paginate(int(page), int(per_page))
         yo = []
+        if page == 1 or per_page == 50:
+            help_str = ("Enter query as http://<URI>?page=<page_no>&size="
+                        "<per_page> to get particular page and items per page")
+            yo.append(help_str)
+        vals = query.paginate(int(page), int(per_page))
         some = {}
         for val in vals.items:
             some["Postal Index Number"] = val.pincode
