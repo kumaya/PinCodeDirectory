@@ -1,16 +1,20 @@
 from app import app
 from models import postalinfo
-from flask_restful import Resource, Api, abort
+from flask_restful import Resource, Api
+from flask import request
 
 api = Api(app)
 
 
 class PinCodes(Resource):
     def get(self):
-        vals = postalinfo.query.filter().all()
+        query = postalinfo.query
+        page = request.args.get('page', 1)
+        per_page = request.args.get('size', 50)
+        vals = query.paginate(int(page), int(per_page))
         yo = []
         some = {}
-        for val in vals:
+        for val in vals.items:
             some["Postal Index Number"] = val.pincode
             some["Office Name"] = val.officename
             some["Office Type"] = val.officeType

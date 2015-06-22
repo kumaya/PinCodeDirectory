@@ -13,8 +13,8 @@ class postalinfo(db.Model):
     Districtname = db.Column(db.String(255))
     statename = db.Column(db.String(255))
 
-    def __repr__(self):
-        return (self.divisionname)
+#     def __repr__(self):
+#         return (self.officename)
 
     def to_json(self):
         pass

@@ -3,3 +3,4 @@ flask
 flask_restful
 flask_sqlalchemy
 sqlite3
+flask_restless
