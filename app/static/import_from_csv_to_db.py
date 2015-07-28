@@ -69,6 +69,6 @@ def csvToDb(csvFile, outputToFile = False):
 
 if __name__ == "__main__":
     csv_file = "./all_india_pin_code.csv"
-    table_name = "PostalInfo"
+    table_name = "postalinfo"
     db_name = "./inventory.db"
     csvToDb(csv_file)
