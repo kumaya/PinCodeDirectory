@@ -1,7 +1,9 @@
+import json
 from app import app
 from models import postalinfo
 from flask_restful import Resource, Api
 from flask import request
+from app import db
 
 api = Api(app)
 
@@ -33,7 +35,11 @@ class PinCodes(Resource):
         return yo
 
     def post(self):
-        pass
+        data_dict = request.json
+        new_pin = postalinfo(data_dict)
+        db.session.add(new_pin)
+        db.session.commit()
+        return postalinfo.query.filter(postalinfo.pincode==data_dict.get('pincode'))
 
 
 class PinCode(Resource):

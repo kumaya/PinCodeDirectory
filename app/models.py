@@ -13,8 +13,15 @@ class postalinfo(db.Model):
     Districtname = db.Column(db.String(255))
     statename = db.Column(db.String(255))
 
-#     def __repr__(self):
-#         return (self.officename)
-
-    def to_json(self):
-        pass
+    def __init__(self, *kwargs):
+        kwargs = kwargs[0]
+        self.pincode = kwargs.get('pincode')
+        self.officename = kwargs.get('officename', None)
+        self.officeType = kwargs.get('officeType', None)
+        self.Deliverystatus = kwargs.get('Deliverystatus', None)
+        self.divisionname = kwargs.get('divisionname')
+        self.regionname = kwargs.get('regionname')
+        self.circlename = kwargs.get('circlename')
+        self.Taluk = kwargs.get('Taluk')
+        self.Districtname = kwargs.get('Districtname')
+        self.statename = kwargs.get('statename')
