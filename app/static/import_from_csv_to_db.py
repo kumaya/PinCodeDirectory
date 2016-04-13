@@ -51,7 +51,10 @@ def csvToDb(csvFile, outputToFile = False):
         cur = con.cursor()
 
         # Generate create table statement:
-        stmt = "CREATE TABLE %s (%s)" % (table_name, ",".join(cols))
+        fields = ",".join(cols)
+        fields = fields + ", PRIMARY KEY (%s)" % cols[1].strip(" INTEGER")
+        stmt = "CREATE TABLE %s (%s)" % (table_name, fields)
+        print stmt
 
         cur.execute(stmt)
 
@@ -62,7 +65,10 @@ def csvToDb(csvFile, outputToFile = False):
         #reader = csv.reader(fin)
         # Generate insert statement:
         stmt = "INSERT INTO %s VALUES(%s);" % (table_name, ','.join('?' * len(cols)))
-        cur.executemany(stmt, reader)
+        try:
+            cur.executemany(stmt, reader)
+        except Exception as e:
+            print
         con.commit()
 
     return con
